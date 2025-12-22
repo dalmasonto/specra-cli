@@ -1,5 +1,6 @@
 import fs from 'fs'
 import path from 'path'
+import { fileURLToPath } from 'url'
 import { execSync } from 'child_process'
 import pc from 'picocolors'
 import {
@@ -53,12 +54,9 @@ export async function createProject({
   console.log()
 
   // Create project structure based on template
-  const templateDir = path.join(
-    new URL('.', import.meta.url).pathname,
-    '..',
-    'templates',
-    template
-  )
+  const __filename = fileURLToPath(import.meta.url)
+  const __dirname = path.dirname(__filename)
+  const templateDir = path.join(__dirname, '..', 'templates', template)
 
   if (!fs.existsSync(templateDir)) {
     console.error(pc.red(`Template ${pc.cyan(template)} not found.`))
