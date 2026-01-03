@@ -28,8 +28,10 @@ const nextConfig = {
   // Empty turbopack config to silence the warning
   // Turbopack handles file watching automatically
   turbopack: {},
-  // Prevent next-mdx-remote from being bundled externally
+  // Prevent these packages from being bundled externally
   serverExternalPackages: [],
+  // Transpile packages that have ESM/React context issues
+  transpilePackages: ['next-mdx-remote', 'specra'],
   async redirects() {
     return redirects
   },

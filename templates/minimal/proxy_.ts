@@ -1,13 +1,12 @@
-import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
+import { createSecurityProxy } from "specra/middleware/security"
 
 // Note: Redirects from frontmatter are handled at build time via next.config.js
-// This middleware can be extended for dynamic redirects if needed
+// This proxy handles runtime security headers, path validation, and dynamic logic
 
-export function middleware(request: NextRequest) {
-  // Add any runtime middleware logic here
-  return NextResponse.next()
-}
+export const proxy = createSecurityProxy({
+  production: process.env.NODE_ENV === "production",
+  strictPathValidation: true,
+})
 
 export const config = {
   matcher: [

@@ -1,8 +1,36 @@
 import { NextRequest } from 'next/server'
-import { watch } from 'fs'
+import { watch, type FSWatcher } from 'fs'
 import { join } from 'path'
 
-export const dynamic = 'force-static'
+// Mark route as incompatible with static export (since it's dev-only SSE endpoint)
+export const dynamic = 'error'
+export const runtime = 'nodejs'
+
+// Store active watchers globally to clean up on process exit
+const activeWatchers = new Set<FSWatcher>()
+
+// Clean up all watchers on process termination
+if (process.env.NODE_ENV === 'development') {
+  const cleanup = () => {
+    if (activeWatchers.size > 0) {
+      console.log('[MDX Watch] Cleaning up watchers...')
+      activeWatchers.forEach((watcher) => {
+        try {
+          watcher.close()
+        } catch (error) {
+          // Ignore errors during cleanup
+        }
+      })
+      activeWatchers.clear()
+      console.log('[MDX Watch] Cleanup complete')
+    }
+  }
+
+  // Use regular event listeners instead of 'once' to ensure cleanup happens
+  process.on('SIGINT', cleanup)
+  process.on('SIGTERM', cleanup)
+  process.on('beforeExit', cleanup)
+}
 
 export async function GET(request: NextRequest) {
   // Only allow in development mode
@@ -46,26 +74,31 @@ export async function GET(request: NextRequest) {
         }
       )
 
-      // Handle client disconnect
-      request.signal.addEventListener('abort', () => {
-        console.log('[MDX Watch] Client disconnected')
+      // Add to active watchers for cleanup on process exit
+      activeWatchers.add(watcher)
+
+      // Handle cleanup
+      const cleanupWatcher = () => {
+        console.log('[MDX Watch] Closing watcher')
+        activeWatchers.delete(watcher)
         watcher.close()
         try {
           controller.close()
         } catch (error) {
           // Controller might already be closed
         }
+      }
+
+      // Handle client disconnect
+      request.signal.addEventListener('abort', () => {
+        console.log('[MDX Watch] Client disconnected')
+        cleanupWatcher()
       })
 
       // Handle errors
       watcher.on('error', (error) => {
         console.error('[MDX Watch] Watcher error:', error)
-        watcher.close()
-        try {
-          controller.close()
-        } catch (e) {
-          // Controller might already be closed
-        }
+        cleanupWatcher()
       })
     }
   })

@@ -189,6 +189,7 @@ export default async function DocPage({ params }: PageProps) {
               />
             ) : (
               <DocLayout
+                key={`doc-layout`}
                 meta={doc.meta}
                 content={doc.content}
                 previousDoc={previous ? { title: previous.meta.title, slug: previous.slug } : undefined}
@@ -199,7 +200,7 @@ export default async function DocPage({ params }: PageProps) {
               />
             )
           }
-          toc={showCategoryIndex ? <div /> : <TableOfContents items={toc} config={config} />}
+          toc={showCategoryIndex ? <div /> : <TableOfContents key={'table-of-contents'} items={toc} config={config} />}
           config={config}
           currentPageTabGroup={currentPageTabGroup}
         />
