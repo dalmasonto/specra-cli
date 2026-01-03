@@ -1,8 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, BookOpen, Zap, Code, Github, Twitter, Linkedin } from "lucide-react"
-import { getConfig, getAssetPath } from "specra/lib"
-import { Button, SiteBanner } from "specra/components"
-// import { Logo } from "specra"
+import { getConfig } from "specra/lib"
+import { Button, SiteBanner, Logo } from "specra/components"
 
 export default function HomePage() {
   // Server component - can use getConfig directly
@@ -17,7 +16,7 @@ export default function HomePage() {
       <header className="border-b border-border">
         <div className="container flex h-16 items-center justify-between px-6 mx-auto">
           <Link href="/" className="flex items-center gap-2">
-            {/* <Logo logo={config.site.logo} alt={config.site.title} className="w-18 object-contain" /> */}
+            <Logo logo={config.site.logo} alt={config.site.title} className="w-18 object-contain" />
             <span className="font-semibold text-lg text-foreground">Specra</span>
           </Link>
           <div className="flex items-center gap-6">
