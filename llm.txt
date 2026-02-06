@@ -135,7 +135,10 @@ This allows `npx create-specra` to work globally.
 
 ## Relationship to Other Projects
 - **specra-sdk**: The CLI scaffolds projects that use specra as a dependency
-- **specra-docs**: Documentation that guides CLI users
+- **specra-docs**: Documentation + SaaS platform that guides CLI users
+  - Now includes payment system: Auth.js v5, Stripe (USD), M-Pesa Daraja (KES), Prisma v7 + PostgreSQL
+  - 4 pricing tiers (Free, Starter, Pro, Enterprise)
+  - CLI-generated projects are always free/self-hosted — no billing features included
 
 **Flow**:
 User → create-specra → New project with specra dependency → Refer to specra-docs

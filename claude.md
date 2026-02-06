@@ -32,7 +32,7 @@ And get a fully working documentation site.
 |---------|------|-------------------|
 | **specra-sdk** | Core library | CLI installs this as dependency in generated projects |
 | **create-specra** | Project generator | This project - creates new sites |
-| **specra-docs** | Documentation | Shows users how to use both CLI and SDK |
+| **specra-docs** | Documentation + SaaS | Shows users how to use both CLI and SDK; also offers paid tiers with Auth.js, Stripe, M-Pesa, and Prisma v7 |
 
 **User Journey**:
 1. Developer discovers Specra via specra-docs
@@ -594,6 +594,8 @@ The documentation should:
 - Document all CLI options
 - Provide template comparisons
 - Include troubleshooting
+
+**Note**: specra-docs now includes a SaaS billing layer (Auth.js v5, Stripe, M-Pesa, Prisma v7 + PostgreSQL) with 4 pricing tiers. The CLI generates free, self-hosted documentation sites that do NOT include any billing features.
 
 ## Testing Strategies
 

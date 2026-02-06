@@ -122,6 +122,8 @@ Specra is a modern documentation library for Next.js that provides:
 - MDX-powered content
 - Beautiful UI components
 
+The official Specra site ([specra-docs](https://specra-docs.com)) also offers a SaaS platform with paid tiers (Starter, Pro, Enterprise) including authentication, Stripe/M-Pesa billing, and a user dashboard. The CLI scaffolds free, self-hosted documentation sites — no billing features are included in generated projects.
+
 ## Learn More
 
 - [Specra on npm](https://www.npmjs.com/package/specra)
@@ -130,7 +132,9 @@ Specra is a modern documentation library for Next.js that provides:
 
 ## License
 
-MIT
+MIT with Branding Requirement — see [LICENSE.MD](LICENSE.MD).
+
+All documentation sites generated with create-specra display a "Powered by Specra" watermark by default. Removing the watermark requires an active paid subscription (Starter tier or above) at [specra-docs.com](https://specra-docs.com). Unauthorized removal is a copyright violation.
 
 ## Authors
 
